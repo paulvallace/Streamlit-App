@@ -188,7 +188,7 @@ column_mapping = {
     "Building Content Value": "Contents",
     "Contents Value": "Contents",
     "BPP": "Contents",
-    " Business Personal Property Limit": "Contents",
+    "Business Personal Property Limit": "Contents",
     "Business Personal Property Limit": "Contents",
     "Business Personal Property Value": "Contents",
     "BUSINESS PERSONAL PROPERTY": "Contents",
@@ -229,9 +229,9 @@ column_mapping = {
     "Annual Rental Income": "Business Interuption",
     "businessincomeextraexpense": "Business Interuption",
     "Bus Income Limit": "Business Interuption",
-    " Business Income/Extra Expense Limit": "Business Interuption",
-    " Business Income Limit": "Business Interuption",
-    " Business Income/Extra Expense": "Business Interuption",
+    "Business Income/Extra Expense Limit": "Business Interuption",
+    "Business Income Limit": "Business Interuption",
+    "Business Income/Extra Expense": "Business Interuption",
 
     "Machinery & Equip.": "Machinery & Equip.",
     "Machinery and Equipment": "Machinery & Equip.",
@@ -672,6 +672,7 @@ if process_button:
     except Exception as e:
         st.error(f"Processing failed: {e}")
         st.exception(e)
+
 
 
 
