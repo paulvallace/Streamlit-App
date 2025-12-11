@@ -550,14 +550,14 @@ if process_button:
                     src_df[col] = parts[col]
             st.info(f"Split combined column **'{combined_col_name}'** → City / State / Zip")
         else:
-            st.info("No combined 'City, State, Zip' column detected.")
+         #   st.info("No combined 'City, State, Zip' column detected.")
 
         # Prefer rows with a street-like column populated
         street_candidates = [c for c in src_df.columns if norm(c) in {"street", "streetaddress", "address"}]
         if street_candidates:
             street_col = street_candidates[0]
             src_df = src_df[src_df[street_col].astype(str).str.strip().ne("")]
-        st.write("**Source Data Columns:**", list(src_df.columns))
+      #  st.write("**Source Data Columns:**", list(src_df.columns))
 
         # Build new_data with target columns kept even when missing
         new_data = pd.DataFrame(columns=TARGETS_IN_ORDER)
