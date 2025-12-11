@@ -478,10 +478,14 @@ with st.sidebar:
 st.subheader("How it works")
 st.markdown(
     """
-1. We **detect the correct sheet and header row** in the uploaded Source SOV by scanning for Street/City/State/Zip synonyms.  
-2. We **map** columns to the CrossCover template fields.  
-3. We **write** the normalized data into the template sheet (row 2 headers preserved).  
-4. Download the **finished Excel**.
+1. This will **detect the correct sheet and header row** in the uploaded Source SOV by scanning for Street/City/State/Zip synonyms.  
+    - Best results to format column headers to match CC's, it will read most unless they are misspelled or include the year in the title.
+2. Type in the Named Insured to name the outputted file
+3. Drop or upload your source file that you want to convert into an CrossCover SOV
+4. Select **"Use a local/netowrk path"** this is the CrossCover template
+5. Click **Process SOV**
+6. This **Transfers** columns to the CrossCover template fields.    
+7. Download the **finished Excel**.
 """
 )
 
@@ -668,4 +672,5 @@ if process_button:
     except Exception as e:
         st.error(f"Processing failed: {e}")
         st.exception(e)
+
 
