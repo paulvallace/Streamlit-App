@@ -549,7 +549,7 @@ if process_button:
                 else:
                     src_df[col] = parts[col]
             st.info(f"Split combined column **'{combined_col_name}'** → City / State / Zip")
-        else:
+  #      else:
          #   st.info("No combined 'City, State, Zip' column detected.")
 
         # Prefer rows with a street-like column populated
@@ -668,3 +668,4 @@ if process_button:
     except Exception as e:
         st.error(f"Processing failed: {e}")
         st.exception(e)
+
