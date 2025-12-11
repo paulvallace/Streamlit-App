@@ -497,12 +497,12 @@ process_button = st.button("🚀 Process SOV", type="primary", use_container_wid
 if process_button:
     if not source_sov:
         st.error("Please upload a **Source SOV (.xlsx)**.")
+        st.stop() 
+    if template_source_choice == "Use a local/network path" and not template_path:
+        st.error("Please provide a **Template path**.")
         st.stop()
     if template_source_choice == "Upload template file" and not uploaded_template:
         st.error("Please upload a **Template (.xlsx)** or switch to the path option.")
-        st.stop()
-    if template_source_choice == "Use a local/network path" and not template_path:
-        st.error("Please provide a **Template path**.")
         st.stop()
     if not named_insured:
         st.warning("No Named Insured provided. The download name will be generic.")
@@ -672,5 +672,6 @@ if process_button:
     except Exception as e:
         st.error(f"Processing failed: {e}")
         st.exception(e)
+
 
 
