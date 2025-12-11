@@ -436,7 +436,7 @@ with st.sidebar:
     else:
         template_path = st.text_input(
             "Template path",
-            value=r"U:\templates\CrossCover SOV - Blank.xlsx",
+            value=r"https://github.com/paulvallace/Streamlit-App/blob/main/CrossCover%20SOV%20-%20Blank.xlsx",
             help="Local or network path accessible from where Streamlit is running."
         )
 
