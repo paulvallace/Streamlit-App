@@ -457,10 +457,15 @@ with st.sidebar:
 st.subheader("How it works")
 st.markdown(
     """
-1. **Detect** the correct sheet and header row in the uploaded Source SOV by scanning for Street/City/State/Zip synonyms.
-2. **Map** columns to the AmRisc SOV-APP template fields.
-3. **Resolve** the real template header row (top-100 scan) and **write** below it, avoiding merged header cells.
-4. **Download** the **finished Excel**.
+1. This will detect the correct sheet and header row in the uploaded Source SOV by scanning for Street/City/State/Zip synonyms.
+- Best results to format column headers to match Amrisc's, it will read most unless they are misspelled or include the year in the title.
+2. Type in the Named Insured to name the outputted file
+3. Drop or upload your source file that you want to convert into an CrossCover SOV
+4. Select "Use a local/netowrk path" this is the Amrisc template
+5. Click Process SOV
+6. This Transfers columns to the CrossCover template fields.
+7. Download the finished Excel.
+
 """
 )
 
@@ -689,3 +694,4 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
