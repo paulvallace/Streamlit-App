@@ -1,5 +1,5 @@
 # amrisc_sov_app.py
-# Streamlit UI wrapper for amrisc SOV processing
+# Streamlit UI wrapper for CrossCover SOV processing
 # Keeps the original detection & mapping logic, adds uploads, options, and a download button.
 
 import io
@@ -116,8 +116,7 @@ TARGETS_IN_ORDER = [
 # ==========================================================
 # Column mapping (SOURCE -> TARGET) using normalized keys
 # ==========================================================
-src_cols_norm = {normalize_alias(c): c for c in source_df.columns}
-raw_column_mapping = {
+column_mapping = {
     
     "locno": "* Bldg No.",
     "streetaddress": "*Street Address",
@@ -474,10 +473,10 @@ st.markdown(
 1. This will **detect the correct sheet and header row** in the uploaded Source SOV by scanning for Street/City/State/Zip synonyms.  
     - Best results to format column headers to match CC's, it will read most unless they are misspelled or include the year in the title.
 2. Type in the Named Insured to name the outputted file
-3. Drop or upload your source file that you want to convert into an amrisc SOV
-4. Select **"Use a local/netowrk path"** this is the amrisc template
+3. Drop or upload your source file that you want to convert into an CrossCover SOV
+4. Select **"Use a local/netowrk path"** this is the CrossCover template
 5. Click **Process SOV**
-6. This **Transfers** columns to the amrisc template fields.    
+6. This **Transfers** columns to the CrossCover template fields.    
 7. Download the **finished Excel**.
 """
 )
@@ -642,11 +641,11 @@ if process_button:
             wb.save(out_buf)
             out_buf.seek(0)
             safe_name = (named_insured or "Named Insured").strip() or "Named Insured"
-            download_name = f"{safe_name} - Amrisc SOV.xlsx"
+            download_name = f"{safe_name} - CrossCover SOV.xlsx"
 
             st.success("Transfer complete ✅")
             st.download_button(
-                label="⬇️ Download Completed Amrisc SOV",
+                label="⬇️ Download Completed CrossCover SOV",
                 data=out_buf.getvalue(),
                 file_name=download_name,
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -665,7 +664,6 @@ if process_button:
     except Exception as e:
         st.error(f"Processing failed: {e}")
         st.exception(e)
-
 
 
 
