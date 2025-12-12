@@ -1,1 +1,1 @@
-Convert SOVs to CrossCover format
+Convert SOVs to Amrisc and CrossCover format
