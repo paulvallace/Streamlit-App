@@ -569,6 +569,28 @@ if process_button:
             # Ensure Zip is string
             if "*Zip" in new_data.columns:
                 new_data["*Zip"] = new_data["*Zip"].astype(str).str.strip()
+                        
+            # --- ZIP normalizer: ensure clean text ZIP (preserve leading zeros) ---
+            if "*Zip" in new_data.columns:
+                # Start from text
+                z = new_data["*Zip"].astype(str).str.strip()
+            
+                # Remove spaces and common non-digit noise (including trailing ".0")
+                # Keep only digits; this safely handles "02481.0", "02481 ", "02481-1234", etc.
+                z_digits = z.str.extract(r'(\d{5}(?:\d{4})?)', expand=False)
+            
+                # Format as 5-digit or ZIP+4 with hyphen
+                def fmt_zip(s):
+                    if not isinstance(s, str):
+                        return None
+                    s = s.strip()
+                    if len(s) == 5 and s.isdigit():
+                        return s.zfill(5)          # preserve leading zeros
+                    if len(s) == 9 and s.isdigit():
+                        return f"{s[:5]}-{s[5:]}"  # ZIP+4 as 12345-6789
+                    return s if s else None        # leave other cases as-is
+            
+                new_data["*Zip"] = z_digits.apply(fmt_zip)
 
             # --- Strict sprinkler mapping: map what's present (no derivation) ---
             sprinkler_source_col = find_sprinkler_col(src_df)
@@ -695,6 +717,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
