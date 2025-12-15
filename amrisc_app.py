@@ -61,7 +61,7 @@ def looks_like_header(row_vals, min_groups=3) -> bool:
     """Detect header row by presence of Street/City/State/Zip tokens."""
     toks = {normalize_alias(v) for v in row_vals if isinstance(v, (str, int, float)) and str(v).strip()}
     groups = [
-        {"street", "streetaddress", "address"},
+        {"street", "streetaddress", "address", "Address 1", "location address"},
         {"city", "town"},
         {"state", "statecode", "province"},
         {"zip", "zipcode", "postal", "postalcode"},
@@ -223,6 +223,7 @@ RAW_COLUMN_MAPPING = {
     "streetaddress": "*Street Address",
     "street": "*Street Address",
     "address": "*Street Address",
+    "Address 1":  "*Street Address",
     "city": "*City",
     "state": "*State Code",
     "zip": "*Zip",
@@ -694,5 +695,6 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
