@@ -245,14 +245,6 @@ RAW_COLUMN_MAPPING = {
     "facility name": "Location Name",
     "building name": "Location Name",
 
-    # AddressNum (street number)
-    "addressnum": "AddressNum",
-    "address number": "AddressNum",
-    "address #": "AddressNum",
-    "street number": "AddressNum",
-    "street #": "AddressNum",
-    "addr num": "AddressNum",
-
     # *Street Address
     "address": "*Street Address",
     "address 1": "*Street Address",
@@ -680,23 +672,23 @@ if process_button:
                 key_norm = normalize_alias(src_key)
                 if key_norm in src_cols_norm and tgt_label in new_data.columns:
                     new_data[tgt_label] = src_df[src_cols_norm[key_norm]].values
+            
+            # Derive AddressNum from Street Address if not present
+            if ("AddressNum" not in new_data.columns) or new_data["AddressNum"].isna().all():
+                def addrnum(s):
+                    if not isinstance(s, str):
+                        return None
+                    m = re.match(r"\s*(\d{1,6})\b", s.strip())
+                    return m.group(1) if m else None
+                street_series = new_data.get("*Street Address")
+                if street_series is not None:
+                    new_data["AddressNum"] = street_series.apply(addrnum)
 
             # Normalize State Code (2-letter uppercase)
             if "*State Code" in new_data.columns:
                 new_data["*State Code"] = new_data["*State Code"].astype(str).str.upper().str.strip().str[:2]
             
-            # After your mapping loop (which fills AddressNum if the source has it):
-            if "AddressNum" in new_data.columns:
-                # Derive only where empty
-                street_series = new_data.get("*Street Address")
-                if street_series is not None:
-                    def addrnum(s):
-                        if not isinstance(s, str):
-                            return None
-                        m = re.match(r"\s*(\d{1,6})\b", s.strip())
-                        return m.group(1) if m else None
-                    empty_mask = new_data["AddressNum"].isna() | (new_data["AddressNum"].astype(str).str.strip() == "")
-                    new_data.loc[empty_mask, "AddressNum"] = street_series[empty_mask].apply(addrnum)
+          
 
             # Ensure Zip is string
             if "*Zip" in new_data.columns:
@@ -840,6 +832,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
