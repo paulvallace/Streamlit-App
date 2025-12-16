@@ -218,175 +218,296 @@ TARGETS_IN_ORDER = [
 
 # Mapping source aliases -> target labels (we normalize keys for matching)
 RAW_COLUMN_MAPPING = {
-    # Common normalized aliases
+    # * Bldg No.
     "locno": "* Bldg No.",
-    "streetaddress": "*Street Address",
-    "street": "*Street Address",
+    "location #": "* Bldg No.",
+    "location no": "* Bldg No.",
+    "location id": "* Bldg No.",
+    "loc #": "* Bldg No.",
+    "loc id": "* Bldg No.",
+    "building #": "* Bldg No.",
+    "bldg #": "* Bldg No.",
+    "bldg no": "* Bldg No.",
+    "building number": "* Bldg No.",
+
+    # *Property Type
+    "property type": "*Property Type",
+    "type of property": "*Property Type",
+    "asset type": "*Property Type",
+    "building type": "*Property Type",
+    "structure type": "*Property Type",
+
+    # Location Name
+    "location name": "Location Name",
+    "location": "Location Name",
+    "site name": "Location Name",
+    "property name": "Location Name",
+    "facility name": "Location Name",
+    "building name": "Location Name",
+
+    # AddressNum (street number)
+    "addressnum": "AddressNum",
+    "address number": "AddressNum",
+    "address #": "AddressNum",
+    "street number": "AddressNum",
+    "street #": "AddressNum",
+    "addr num": "AddressNum",
+
+    # *Street Address
     "address": "*Street Address",
-    "Address 1":  "*Street Address",
+    "address 1": "*Street Address",
+    "street": "*Street Address",
+    "street address": "*Street Address",
+    "street name": "*Street Address",
+    "location address": "*Street Address",
+    "location / address": "*Street Address",
+    "st address": "*Street Address",
+
+    # *City
     "city": "*City",
+    "city ": "*City",
+    "town": "*City",
+
+    # *State Code
     "state": "*State Code",
+    "state code": "*State Code",
+    "st": "*State Code",
+    "state/prov": "*State Code",
+    "state/province": "*State Code",
+    "province": "*State Code",
+
+    # *Zip
     "zip": "*Zip",
+    "zip code": "*Zip",
     "zipcode": "*Zip",
-    "squarefootage": "*Square Footage",
+    "postal code": "*Zip",
+    "postal": "*Zip",
+    "zip code / postal code": "*Zip",
+
+    # County
+    "county": "County",
+    "county name": "County",
+    "parish": "County",
+
+    # Is Prop within 1000 ft of saltwater
+    "is prop within 1000 ft of saltwater": "Is Prop within 1000 ft of saltwater",
+    "within 1000 ft of saltwater": "Is Prop within 1000 ft of saltwater",
+    "saltwater within 1000 ft": "Is Prop within 1000 ft of saltwater",
+    "saltwater proximity": "Is Prop within 1000 ft of saltwater",
+    "coastal proximity": "Is Prop within 1000 ft of saltwater",
+    "within 1000ft saltwater": "Is Prop within 1000 ft of saltwater",
+
+    # *# of Bldgs
+    "# buildings": "*# of Bldgs",
+    "number of buildings": "*# of Bldgs",
+    "num buildings": "*# of Bldgs",
     "ofbuildings": "*# of Bldgs",
-    "ofstories": "*# of Stories",
-    "yearbuilt": "*Orig Year Built",
-    "roofingupdate": "*Year Roof covering last fully replaced",
-    "buildingvaluereplacementcostvaluation": "*Real Property Value ($)",
-    "businesspersonalproperty": "Personal Property Value ($)",
-    "businessincomeextraexpense": "BI/Rental Income ($)",
+    "# of bldgs": "*# of Bldgs",
+    "# bldgs": "*# of Bldgs",
+
+    # *ISO Const (type)
+    "iso construction": "*ISO Const",
+    "iso construction type": "*ISO Const",
+    "construction type": "*ISO Const",
+    "const type": "*ISO Const",
+    "constr type": "*ISO Const",
+    "constr. type": "*ISO Const",
+
+    # Construction Description (details)
     "construction": "Construction Description (provide further details on construction features)",
-    "Construction Type": "*ISO Const",
+    "construction description": "Construction Description (provide further details on construction features)",
+    "air const description": "Construction Description (provide further details on construction features)",
+    "const description": "Construction Description (provide further details on construction features)",
+    "building construction": "Construction Description (provide further details on construction features)",
+
+    # *# of Stories
+    "# stories": "*# of Stories",
+    "# of stories": "*# of Stories",
+    "number of stories": "*# of Stories",
+    "num stories": "*# of Stories",
+    "stories": "*# of Stories",
+    "ofstories": "*# of Stories",
+
+    # *Orig Year Built
+    "year built": "*Orig Year Built",
+    "yearbuilt": "*Orig Year Built",
+    "yr built": "*Orig Year Built",
+    "year": "*Orig Year Built",
+    "orig year built": "*Orig Year Built",
+    "original year built": "*Orig Year Built",
+
+    # Yr Bldg upgraded - Major Exterior Update (mandatory if >25 yrs old)
+    "year building upgraded": "Yr Bldg upgraded - Major Exterior Update (mandatory if >25 yrs old)",
+    "year bldg upgraded": "Yr Bldg upgraded - Major Exterior Update (mandatory if >25 yrs old)",
+    "major exterior update year": "Yr Bldg upgraded - Major Exterior Update (mandatory if >25 yrs old)",
+    "renovation year": "Yr Bldg upgraded - Major Exterior Update (mandatory if >25 yrs old)",
+    "remodel year": "Yr Bldg upgraded - Major Exterior Update (mandatory if >25 yrs old)",
+    "year remodeled": "Yr Bldg upgraded - Major Exterior Update (mandatory if >25 yrs old)",
+
+    # *Year Roof covering last fully replaced
+    "year roof replaced": "*Year Roof covering last fully replaced",
+    "roofing year": "*Year Roof covering last fully replaced",
+    "roof update year": "*Year Roof covering last fully replaced",
+    "roofing update": "*Year Roof covering last fully replaced",
+    "roof year": "*Year Roof covering last fully replaced",
+    "roof": "*Year Roof covering last fully replaced",
+
+    # *Real Property Value ($)
+    "building": "*Real Property Value ($)",
+    "buildings": "*Real Property Value ($)",
+    "bldg.": "*Real Property Value ($)",
+    "bldgs": "*Real Property Value ($)",
+    "bldg value": "*Real Property Value ($)",
+    "building(s)": "*Real Property Value ($)",
+    "real property value ($)": "*Real Property Value ($)",
+    "*real property value ($)": "*Real Property Value ($)",
+    "building limit": "*Real Property Value ($)",
+    "building value": "*Real Property Value ($)",
+    "building values": "*Real Property Value ($)",
+    "building value ($)": "*Real Property Value ($)",
+    "real property": "*Real Property Value ($)",
+    "building replacement cost": "*Real Property Value ($)",
+
+    # Personal Property Value ($)
+    "contents": "Personal Property Value ($)",
+    "building content value": "Personal Property Value ($)",
+    "contents value": "Personal Property Value ($)",
+    "bpp": "Personal Property Value ($)",
+    "business personal property limit": "Personal Property Value ($)",
+    "business personal property value": "Personal Property Value ($)",
+    "business personal property": "Personal Property Value ($)",
+    "personal property": "Personal Property Value ($)",
+    "contents w/ stock": "Personal Property Value ($)",
+    "tib/business personal property limit": "Personal Property Value ($)",
+
+    # M&E (Complete M&E Tech Summary Sheet)
+    "machinery & equip.": "M&E (Complete M&E Tech Summary Sheet)",
+    "machinery and equipment": "M&E (Complete M&E Tech Summary Sheet)",
+    "machinery/equipment": "M&E (Complete M&E Tech Summary Sheet)",
+    "machinery": "M&E (Complete M&E Tech Summary Sheet)",
+    "equipment": "M&E (Complete M&E Tech Summary Sheet)",
+    "contractors equipment": "M&E (Complete M&E Tech Summary Sheet)",
+
+    # Other Value $ (outdoor prop & Eqpt must be sch'd)
+    "other": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
+    "other values": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
+    "other value": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
+    "container(s)": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
+    "edp": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
+    "electronic data processing": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
+    "miscellaneous": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
+    "inventory": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
+
+    # BI/Rental Income ($)
+    "bi/ee": "BI/Rental Income ($)",
+    "bi/ee value": "BI/Rental Income ($)",
+    "bi": "BI/Rental Income ($)",
+    "bi ee": "BI/Rental Income ($)",
+    "business income limit": "BI/Rental Income ($)",
+    "business income w extra expense": "BI/Rental Income ($)",
+    "business income/ee": "BI/Rental Income ($)",
+    "business income/extra expense": "BI/Rental Income ($)",
+    "business interruption & extra expense": "BI/Rental Income ($)",
+    "business income/rental income": "BI/Rental Income ($)",
+    "bi & ee": "BI/Rental Income ($)",
+    "bi w ee": "BI/Rental Income ($)",
+    "bi w/ee": "BI/Rental Income ($)",
+    "extra expense": "BI/Rental Income ($)",
+    "business interruption": "BI/Rental Income ($)",
+    "business income": "BI/Rental Income ($)",
+    "rents / business income": "BI/Rental Income ($)",
+    "rental income": "BI/Rental Income ($)",
+    "rents": "BI/Rental Income ($)",
+    "rents income & extra exp.": "BI/Rental Income ($)",
+    "business income / rents": "BI/Rental Income ($)",
+    "effective gross income": "BI/Rental Income ($)",
+
+    # *Occupancy Description
+    "occupancy": "*Occupancy Description",
+    "occupancy description": "*Occupancy Description",
+    "occupancy type": "*Occupancy Description",
+    "type of occupancy": "*Occupancy Description",
+    "building use": "*Occupancy Description",
+    "building description": "*Occupancy Description",
+    "building type (use)": "*Occupancy Description",
+    "air occupancy description": "*Occupancy Description",
+    "occupancy - (i.e mixed use, apartments, apartments w/ retail)": "*Occupancy Description",
+
+    # Is Prop Mgd or Owned?
+    "is prop mgd or owned?": "Is Prop Mgd or Owned?",
+    "managed or owned": "Is Prop Mgd or Owned?",
+    "is property managed or owned": "Is Prop Mgd or Owned?",
+    "ownership type": "Is Prop Mgd or Owned?",
+    "management type": "Is Prop Mgd or Owned?",
+    "owned or managed": "Is Prop Mgd or Owned?",
+
+    # Date Added to Sched.
+    "date added": "Date Added to Sched.",
+    "date added to sched.": "Date Added to Sched.",
+    "date added to schedule": "Date Added to Sched.",
+    "date added to sov": "Date Added to Sched.",
+    "added date": "Date Added to Sched.",
+
+    # *# of Units
+    "# units": "*# of Units",
+    "# of units": "*# of Units",
+    "number of units": "*# of Units",
+    "num units": "*# of Units",
+    "units": "*# of Units",
+    "# of units / containers": "*# of Units",
+
+    # *Square Footage
+    "square feet": "*Square Footage",
+    "total building square footage": "*Square Footage",
+    "total building sf": "*Square Footage",
+    "sq ft": "*Square Footage",
+    "sq. ft.": "*Square Footage",
+    "sqft": "*Square Footage",
+    "building square footage": "*Square Footage",
+    "total square footage": "*Square Footage",
+    "total sq ft": "*Square Footage",
+    "building sqft": "*Square Footage",
+    "square footage": "*Square Footage",
+    "gross area": "*Square Footage",
+    "total area": "*Square Footage",
+
+    # % Occupied
+    "% occupied": "% Occupied",
+    "occupancy %": "% Occupied",
+    "% occupancy": "% Occupied",
+    "occupancy percent": "% Occupied",
+    "occupancy rate": "% Occupied",
+
+    # Percent Sprinklered
+    "percent sprinklered": "Percent Sprinklered",
+    "% sprinklered": "Percent Sprinklered",
+    "% of structure sprinklered": "Percent Sprinklered",
+    "sprinkler (% )": "Percent Sprinklered",
+    "% sprinkler coverage": "Percent Sprinklered",
+
+    # Sprinklered (Y/N)
+    "sprinklered (y/n)": "Sprinklered (Y/N)",
+    "sprinklered?": "Sprinklered (Y/N)",
+    "sprinklers (y/n)": "Sprinklered (Y/N)",
+    "sprinkler system?": "Sprinklered (Y/N)",
+    "sprink y/n/p": "Sprinklered (Y/N)",
+
+    # ISO Prot Class
+    "iso protclass": "ISO Prot Class",
+    "iso prot class": "ISO Prot Class",
+    "protection class": "ISO Prot Class",
+    "prot class": "ISO Prot Class",
+    "pc": "ISO Prot Class",
     "protectionclass": "ISO Prot Class",
 
-    # Address block literals (also normalized on lookup)
-    "Street Address": "*Street Address",
-    "STREET ADDRESS": "*Street Address",
-    "Location Address": "*Street Address",
-    "LOCATION / ADDRESS": "*Street Address",
-    "City ": "*City",
-    "City": "*City",
-    "Town": "*City",
-    "State": "*State Code",
-    "ST": "*State Code",
-    "Province": "*State Code",
-    "State Code": "*State Code",
-    "Zip Code": "*Zip",
-    "Zip code": "*Zip",
-    "Zip Code / Postal Code": "*Zip",
-    "Postal Code": "*Zip",
-    "Postal": "*Zip",
-
-    # Values
-    "Building": "*Real Property Value ($)",
-    "BUILDING": "*Real Property Value ($)",
-    "Bldg.": "*Real Property Value ($)",
-    "Bldgs": "*Real Property Value ($)",
-    "Bldg Value": "*Real Property Value ($)",
-    "Building(s)": "*Real Property Value ($)",
-    "Real Property Value ($)": "*Real Property Value ($)",
-    "*Real Property Value ($)": "*Real Property Value ($)",
-    "Building Limit": "*Real Property Value ($)",
-    "Building Value": "*Real Property Value ($)",
-    "Building Values": "*Real Property Value ($)",
-    "Building Value ($)": "*Real Property Value ($)",
-    "Real Property": "*Real Property Value ($)",
-    "Building Replacement Cost": "*Real Property Value ($)",
-    "Real Property Building": "*Real Property Value ($)",
-
-    "Contents": "Personal Property Value ($)",
-    "Building Content Value": "Personal Property Value ($)",
-    "Contents Value": "Personal Property Value ($)",
-    "BPP": "Personal Property Value ($)",
-    "Business Personal Property (BPP)": "Personal Property Value ($)",
-    "Business Personal Property Limit": "Personal Property Value ($)",
-    "Business Personal Property Value": "Personal Property Value ($)",
-    "BUSINESS PERSONAL PROPERTY": "Personal Property Value ($)",
-    "Personal Property": "Personal Property Value ($)",
-    "Business Personal Property": "Personal Property Value ($)",
-    "Contents w/ Stock": "Personal Property Value ($)",
-    "TIB/Business Personal Property Limit": "Personal Property Value ($)",
-
-    # BI/Rentals -> AmRisc BI/Rental
-    "BI/EE": "BI/Rental Income ($)",
-    "BI/EE Value": "BI/Rental Income ($)",
-    "BI": "BI/Rental Income ($)",
-    "BI EE": "BI/Rental Income ($)",
-    "Business Income Limit": "BI/Rental Income ($)",
-    "Business Income w Extra Expense": "BI/Rental Income ($)",
-    "Business Income/EE": "BI/Rental Income ($)",
-    "Business Income/Extra Expense": "BI/Rental Income ($)",
-    "Business Interruption & Extra Expense": "BI/Rental Income ($)",
-    "Business Income/Rental Income": "BI/Rental Income ($)",
-    "BI & EE": "BI/Rental Income ($)",
-    "BI w EE": "BI/Rental Income ($)",
-    "BI w/EE": "BI/Rental Income ($)",
-    "Extra Expense": "BI/Rental Income ($)",
-    "Business Interruption": "BI/Rental Income ($)",
-    "Business Income": "BI/Rental Income ($)",
-    "Rents / Business Income": "BI/Rental Income ($)",
-    "Rental Income": "BI/Rental Income ($)",
-    "Rents": "BI/Rental Income ($)",
-    "Rents Income & Extra Exp.": "BI/Rental Income ($)",
-    "Business Income / Rents ": "BI/Rental Income ($)",
-    "Effective Gross Income": "BI/Rental Income ($)",
-    "Business Income (BI), Extra Expense (EE)": "BI/Rental Income ($)",
-
-    # Machinery & Equip.
-    "Machinery & Equip.": "M&E (Complete M&E Tech Summary Sheet)",
-    "Machinery and Equipment": "M&E (Complete M&E Tech Summary Sheet)",
-    "Machinery/Equipment": "M&E (Complete M&E Tech Summary Sheet)",
-    "Machinery": "M&E (Complete M&E Tech Summary Sheet)",
-    "Equipment": "M&E (Complete M&E Tech Summary Sheet)",
-    "Contractors Equipment": "M&E (Complete M&E Tech Summary Sheet)",
-    "Container(s)": "M&E (Complete M&E Tech Summary Sheet)",
-    "EDP": "M&E (Complete M&E Tech Summary Sheet)",
-    "Electronic Data Processing": "M&E (Complete M&E Tech Summary Sheet)",
-
-    # Other
-    "Other": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
-    "Other Values": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
-    "Other Value": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
-
-    "Miscellaneous": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
-    "Inventory": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
-
-    # # of buildings/units/stories
-    "Num Buildings": "*# of Bldgs",
-    "# Buildings": "*# of Bldgs",
-    "Number of Buildings": "*# of Bldgs",
-    "Num Units": "*# of Units",
-    "Number of Units": "*# of Units",
-    "# Units": "*# of Units",
-    "Units": "*# of Units",
-    "Num Stories": "*# of Stories",
-    "# of Stories": "*# of Stories",
-    "Stories": "*# of Stories",
-    "Number of Stories": "*# of Stories",
-
-    # Square Footage
-    "Square Feet": "*Square Footage",
-    "Total Building Square Footage": "*Square Footage",
-    "Total Building SF": "*Square Footage",
-    "Sq Ft": "*Square Footage",
-    "Sq. Ft.": "*Square Footage",
-    "Square feet": "*Square Footage",
-    "SqFt": "*Square Footage",
-    "Building Square Footage": "*Square Footage",
-    "Total Square Footage": "*Square Footage",
-    "Total Sq Ft": "*Square Footage",
-    "Building SQFT": "*Square Footage",
-    "Square Footage": "*Square Footage",
-
-    # Occupancy
-    "Occupancy": "*Occupancy Description",
-    "OCCUPANCY - (i.e Mixed Use, Apartments, Apartments w/ retail)": "*Occupancy Description",
-    "*Occupancy": "*Occupancy Description",
-    "Occupancy Type": "*Occupancy Description",
-    "Type of Occupancy": "*Occupancy Description",
-    "Occupancy Description": "*Occupancy Description",
-    "Description": "*Occupancy Description",
-    "Building Use": "*Occupancy Description",
-    "Building Type": "*Occupancy Description",
-    "Building Description": "*Occupancy Description",
-    "AIR Occupancy Description": "*Occupancy Description",
-
-    # Year built / roof replaced (required)
-    "Year Built": "*Orig Year Built",
-    "Year built": "*Orig Year Built",
-    "YearBuilt": "*Orig Year Built",
-    "Yr Built": "*Orig Year Built",
-    "Year": "*Orig Year Built",
-    "Orig Year Built": "*Orig Year Built",
-    "Original Year Built": "*Orig Year Built",
-
-    "Year Roof Replaced": "*Year Roof covering last fully replaced",
-    "Roofing Year": "*Year Roof covering last fully replaced",
-    "Roof Update Year": "*Year Roof covering last fully replaced",
-    "Roof Year": "*Year Roof covering last fully replaced",
-    "Roof": "*Year Roof covering last fully replaced",
+    # Flood Zone
+    "flood zone": "Flood Zone",
+    "fema flood zone": "Flood Zone",
+    "flood": "Flood Zone",
+    "flood class": "Flood Zone",
 }
+
+
 
 # =========================
 # Sidebar / Inputs
@@ -714,6 +835,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
