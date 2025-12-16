@@ -211,7 +211,7 @@ TARGETS_IN_ORDER = [
     "*# of Stories", "*Orig Year Built", "Yr Bldg upgraded - Major Exterior Update (mandatory if >25 yrs old)",
     "*Year Roof covering last fully replaced", "*Real Property Value ($)", "Personal Property Value ($)",
     "M&E (Complete M&E Tech Summary Sheet)", "Other Value $ (outdoor prop & Eqpt must be sch'd)",
-    "BI/Rental Income ($)", "*Total TIV", "*Occupancy Description", "Is Prop Mgd or Owned?",
+    "BI/Rental Income ($)", "*Occupancy Description", "Is Prop Mgd or Owned?",
     "Date Added to Sched.", "*# of Units", "*Square Footage", "% Occupied", "Percent Sprinklered",
     "Sprinklered (Y/N)", "ISO Prot Class", "Flood Zone",
 ]
@@ -237,6 +237,7 @@ RAW_COLUMN_MAPPING = {
     "businesspersonalproperty": "Personal Property Value ($)",
     "businessincomeextraexpense": "BI/Rental Income ($)",
     "construction": "Construction Description (provide further details on construction features)",
+    "Construction Type": "*ISO Const".
     "protectionclass": "ISO Prot Class",
 
     # Address block literals (also normalized on lookup)
@@ -272,11 +273,13 @@ RAW_COLUMN_MAPPING = {
     "Building Value ($)": "*Real Property Value ($)",
     "Real Property": "*Real Property Value ($)",
     "Building Replacement Cost": "*Real Property Value ($)",
+    "Real Property Building": "*Real Property Value ($)",
 
     "Contents": "Personal Property Value ($)",
     "Building Content Value": "Personal Property Value ($)",
     "Contents Value": "Personal Property Value ($)",
     "BPP": "Personal Property Value ($)",
+    "Business Personal Property (BPP)": "Personal Property Value ($)",
     "Business Personal Property Limit": "Personal Property Value ($)",
     "Business Personal Property Value": "Personal Property Value ($)",
     "BUSINESS PERSONAL PROPERTY": "Personal Property Value ($)",
@@ -308,6 +311,7 @@ RAW_COLUMN_MAPPING = {
     "Rents Income & Extra Exp.": "BI/Rental Income ($)",
     "Business Income / Rents ": "BI/Rental Income ($)",
     "Effective Gross Income": "BI/Rental Income ($)",
+    "Business Income (BI), Extra Expense (EE)": "BI/Rental Income ($)",
 
     # Machinery & Equip.
     "Machinery & Equip.": "M&E (Complete M&E Tech Summary Sheet)",
@@ -316,14 +320,15 @@ RAW_COLUMN_MAPPING = {
     "Machinery": "M&E (Complete M&E Tech Summary Sheet)",
     "Equipment": "M&E (Complete M&E Tech Summary Sheet)",
     "Contractors Equipment": "M&E (Complete M&E Tech Summary Sheet)",
+    "Container(s)": "M&E (Complete M&E Tech Summary Sheet)",
+    "EDP": "M&E (Complete M&E Tech Summary Sheet)",
+    "Electronic Data Processing": "M&E (Complete M&E Tech Summary Sheet)",
 
     # Other
     "Other": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
     "Other Values": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
     "Other Value": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
-    "Container(s)": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
-    "EDP": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
-    "Electronic Data Processing": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
+
     "Miscellaneous": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
     "Inventory": "Other Value $ (outdoor prop & Eqpt must be sch'd)",
 
@@ -350,6 +355,7 @@ RAW_COLUMN_MAPPING = {
     "SqFt": "*Square Footage",
     "Building Square Footage": "*Square Footage",
     "Total Square Footage": "*Square Footage",
+    "Total Sq Ft": "*Square Footage",
     "Building SQFT": "*Square Footage",
     "Square Footage": "*Square Footage",
 
@@ -614,15 +620,6 @@ if process_button:
                     if col not in new_data.columns:
                         new_data[col] = None
 
-            # If Total TIV missing, sum Real Property + Personal Property + BI/Rental (ignore NaN)
-            if "*Total TIV" not in new_data.columns or new_data["*Total TIV"].isna().all():
-                rp = new_data.get("*Real Property Value ($)", pd.Series([0] * len(new_data))).fillna(0)
-                pp = new_data.get("Personal Property Value ($)", pd.Series([0] * len(new_data))).fillna(0)
-                bi = new_data.get("BI/Rental Income ($)", pd.Series([0] * len(new_data))).fillna(0)
-                new_data["*Total TIV"] = pd.to_numeric(rp, errors="coerce").fillna(0) + \
-                                         pd.to_numeric(pp, errors="coerce").fillna(0) + \
-                                         pd.to_numeric(bi, errors="coerce").fillna(0)
-
             st.markdown("**First 5 rows of mapped data:**")
             st.dataframe(new_data.head(), use_container_width=True)
 
@@ -717,6 +714,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
