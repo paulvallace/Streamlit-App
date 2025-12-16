@@ -367,6 +367,7 @@ RAW_COLUMN_MAPPING = {
     "building value ($)": "*Real Property Value ($)",
     "real property": "*Real Property Value ($)",
     "building replacement cost": "*Real Property Value ($)",
+    "real property building": "*Real Property Value ($)",
 
     # Personal Property Value ($)
     "contents": "Personal Property Value ($)",
@@ -379,6 +380,7 @@ RAW_COLUMN_MAPPING = {
     "personal property": "Personal Property Value ($)",
     "contents w/ stock": "Personal Property Value ($)",
     "tib/business personal property limit": "Personal Property Value ($)",
+    "business personal property (bpp)" : "Personal Property Value ($)",
 
     # M&E (Complete M&E Tech Summary Sheet)
     "machinery & equip.": "M&E (Complete M&E Tech Summary Sheet)",
@@ -421,6 +423,7 @@ RAW_COLUMN_MAPPING = {
     "rents income & extra exp.": "BI/Rental Income ($)",
     "business income / rents": "BI/Rental Income ($)",
     "effective gross income": "BI/Rental Income ($)",
+    "business income (bi), extra expense (ee)" : "BI/Rental Income ($)",
 
     # *Occupancy Description
     "occupancy": "*Occupancy Description",
@@ -837,6 +840,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
