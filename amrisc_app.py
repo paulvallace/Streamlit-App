@@ -237,7 +237,7 @@ RAW_COLUMN_MAPPING = {
     "businesspersonalproperty": "Personal Property Value ($)",
     "businessincomeextraexpense": "BI/Rental Income ($)",
     "construction": "Construction Description (provide further details on construction features)",
-    "Construction Type": "*ISO Const".
+    "Construction Type": "*ISO Const",
     "protectionclass": "ISO Prot Class",
 
     # Address block literals (also normalized on lookup)
@@ -714,6 +714,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
