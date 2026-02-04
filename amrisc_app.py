@@ -529,18 +529,25 @@ with st.sidebar:
 
     template_source_choice = st.radio(
         "Template source",
-        options=["Upload template file", "Use a local/network path"],
+        options=["Use a local/network path"],
         index=0,
     )
 
     uploaded_template = None
     template_path = None
-    
-    template_path = st.text_input(
-        "Template path",
-        value=r"AmRisc_SOV_Schedule.xlsx",
-        help="Local or network path accessible from where Streamlit is running."
-    )
+    if template_source_choice == "Upload template file":
+        uploaded_template = st.file_uploader(
+            "Upload AmRisc Template (.xlsx)",
+            type=["xlsx"],
+            accept_multiple_files=False,
+            help="If not provided, you can switch to the 'path' option."
+        )
+    else:
+        template_path = st.text_input(
+            "Template path",
+            value=r"AmRisc_SOV_Schedule.xlsx",
+            help="Local or network path accessible from where Streamlit is running."
+        )
 
     template_sheet_name = st.text_input(
         "Template sheet name",
@@ -580,7 +587,7 @@ st.subheader("How it works")
 st.markdown(
     """
 1. This will detect the column headers in the uploaded Source SOV.
-    - Best match results to format column headers: Building Value, BPP, BI/EE, Square Feet, Occupancy Description, Contruction Type.
+    - Best match results to format column headers: *Building Value, BPP, BI/EE, Square Feet, Occupancy Description, Contruction Type*
 2. Type in the Named Insured to name the outputted file
 3. Drop or upload your source file that you want to convert into an CrossCover SOV
 4. Select "Use a local/network path" this is the Amrisc template
