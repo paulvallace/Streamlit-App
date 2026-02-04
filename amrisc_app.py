@@ -28,12 +28,13 @@ st.caption("Point-and-click app that normalizes a client SOV into the AmRisc SOV
 # Helpers (normalized & merged-cell-safe)
 # =========================
 def normalize_alias(x: Optional[str]) -> str:
-    """Lower, trim, collapse whitespace, '&'->'and', strip non-alphanum."""
+    """Lower, trim, collapse whitespace, '&amp;'->'and', remove *,(), strip non-alphanum."""
     if x is None:
         return ""
-    s = str(x).strip().lower().replace("&", "and")
-    s = re.sub(r"\s+", " ", s)
-    return re.sub(r"[^a-z0-9]", "", s)
+    s = str(x).strip().lower().replace("&amp;", "and")
+    s = re.sub(r"[\*\(\)]", "", s)      # remove *, (, )
+    s = re.sub(r"\s+", " ", s)         # collapse whitespace
+    return re.sub(r"[^a-z0-9]", "", s)  # strip non-alphanum
 
 def split_lines_safe(s: Optional[str]):
     """Split on CR/LF and trim parts."""
@@ -360,6 +361,8 @@ RAW_COLUMN_MAPPING = {
     "real property": "*Real Property Value ($)",
     "building replacement cost": "*Real Property Value ($)",
     "real property building": "*Real Property Value ($)",
+    "building value 26-27": "*Real Property Value ($)",
+    "building 26-27": "*Real Property Value ($)",
 
     # Personal Property Value ($)
     "contents": "Personal Property Value ($)",
@@ -458,6 +461,9 @@ RAW_COLUMN_MAPPING = {
     "sq ft": "*Square Footage",
     "sq. ft.": "*Square Footage",
     "sqft": "*Square Footage",
+    "sf":"*Square Footage",
+    "square ft":"*Square Footage",
+    "sq. ft":"*Square Footage",
     "building square footage": "*Square Footage",
     "total square footage": "*Square Footage",
     "total sq ft": "*Square Footage",
@@ -521,21 +527,21 @@ with st.sidebar:
         help="This is the client-provided SOV you want to normalize."
     )
 
-    template_source_choice = st.radio(
-        "Template source",
-        options=["Upload template file", "Use a local/network path"],
-        index=0,
-    )
+#    template_source_choice = st.radio(
+     #   "Template source",
+    #    options=["Upload template file", "Use a local/network path"],
+   #     index=0,
+#    )
 
     uploaded_template = None
     template_path = None
-    if template_source_choice == "Upload template file":
-        uploaded_template = st.file_uploader(
-            "Upload AmRisc Template (.xlsx)",
-            type=["xlsx"],
-            accept_multiple_files=False,
-            help="If not provided, you can switch to the 'path' option."
-        )
+  #  if template_source_choice == "Upload template file":
+  #      uploaded_template = st.file_uploader(
+   #         "Upload AmRisc Template (.xlsx)",
+   #         type=["xlsx"],
+   #         accept_multiple_files=False,
+    #        help="If not provided, you can switch to the 'path' option."
+   #     )
     else:
         template_path = st.text_input(
             "Template path",
@@ -580,8 +586,8 @@ with st.sidebar:
 st.subheader("How it works")
 st.markdown(
     """
-1. This will detect the correct sheet and header row in the uploaded Source SOV by scanning for Street/City/State/Zip synonyms.
-    - Best results to format column headers to match Amrisc's, it will read most unless they are misspelled or include the year in the title.
+1. This will detect the column headers in the uploaded Source SOV.
+    - Best match results to format column headers: Building Value, BPP, BI/EE, Square Feet, Occupancy Description, Contruction Type.
 2. Type in the Named Insured to name the outputted file
 3. Drop or upload your source file that you want to convert into an CrossCover SOV
 4. Select "Use a local/network path" this is the Amrisc template
@@ -601,9 +607,7 @@ if process_button:
     if not source_sov:
         st.error("Please upload a **Source SOV (.xlsx)**.")
         st.stop()
-    if template_source_choice == "Upload template file" and not uploaded_template:
-        st.error("Please upload a **Template (.xlsx)** or switch to the path option.")
-        st.stop()
+
     if template_source_choice == "Use a local/network path" and not template_path:
         st.error("Please provide a **Template path**.")
         st.stop()
@@ -832,6 +836,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
