@@ -587,7 +587,7 @@ st.subheader("How it works")
 st.markdown(
     """
 1. This will detect the column headers in the uploaded Source SOV.
-    - Best match results to format column headers: *Building Value, BPP, BI/EE, Square Feet, Occupancy Description, Contruction Type*
+    - Best match results to format column headers: **Building Value, BPP, BI/EE, Square Feet, Occupancy Description, Contruction Type**
 2. Type in the Named Insured to name the outputted file
 3. Drop or upload your source file that you want to convert into an CrossCover SOV
 4. Select "Use a local/network path" this is the Amrisc template
@@ -838,6 +838,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
