@@ -22,7 +22,7 @@ st.caption("Wraps the original `CrossCover_Sov_fixed.py` into a point-and-click 
 # =========================
 def norm(s: Optional[str]) -> str:
     """Normalize header text for matching."""
-        """Lower, trim, collapse whitespace, '&amp;'->'and', remove *,(), strip non-alphanum."""
+    """Lower, trim, collapse whitespace, '&amp;'->'and', remove *,(), strip non-alphanum."""
     if x is None:
         return ""
     s = str(x).strip().lower().replace("&amp;", "and")
@@ -424,7 +424,7 @@ with st.sidebar:
 
     template_source_choice = st.radio(
         "Template source",
-        options=["Upload template file", "Use a local/network path"],
+        options=["Use a local/network path"],
         index=0,
     )
 
@@ -676,6 +676,7 @@ if process_button:
     except Exception as e:
         st.error(f"Processing failed: {e}")
         st.exception(e)
+
 
 
 
