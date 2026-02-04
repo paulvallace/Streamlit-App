@@ -535,7 +535,6 @@ with st.sidebar:
 
     uploaded_template = None
     template_path = None
-    if template_source_choice == "Use a local/network path":
         template_path = st.text_input(
             "Template path",
             value=r"AmRisc_SOV_Schedule.xlsx",
@@ -829,6 +828,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
