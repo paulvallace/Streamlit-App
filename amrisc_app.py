@@ -535,13 +535,13 @@ with st.sidebar:
 
     uploaded_template = None
     template_path = None
-  #  if template_source_choice == "Upload template file":
-  #      uploaded_template = st.file_uploader(
-   #         "Upload AmRisc Template (.xlsx)",
-   #         type=["xlsx"],
-   #         accept_multiple_files=False,
-    #        help="If not provided, you can switch to the 'path' option."
-   #     )
+    if template_source_choice == "Upload template file":
+        uploaded_template = st.file_uploader(
+            "Upload AmRisc Template (.xlsx)",
+            type=["xlsx"],
+            accept_multiple_files=False,
+            help="If not provided, you can switch to the 'path' option."
+        )
     else:
         template_path = st.text_input(
             "Template path",
@@ -836,6 +836,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
