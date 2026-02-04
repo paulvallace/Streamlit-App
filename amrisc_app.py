@@ -219,17 +219,6 @@ TARGETS_IN_ORDER = [
 
 # Mapping source aliases -> target labels (we normalize keys for matching)
 RAW_COLUMN_MAPPING = {
-    # * Bldg No.
-    "locno": "* Bldg No.",
-    "location #": "* Bldg No.",
-    "location no": "* Bldg No.",
-    "location id": "* Bldg No.",
-    "loc #": "* Bldg No.",
-    "loc id": "* Bldg No.",
-    "building #": "* Bldg No.",
-    "bldg #": "* Bldg No.",
-    "bldg no": "* Bldg No.",
-    "building number": "* Bldg No.",
 
     # *Property Type
     "property type": "*Property Type",
@@ -838,6 +827,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
