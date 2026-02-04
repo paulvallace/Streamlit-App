@@ -22,11 +22,13 @@ st.caption("Wraps the original `CrossCover_Sov_fixed.py` into a point-and-click 
 # =========================
 def norm(s: Optional[str]) -> str:
     """Normalize header text for matching."""
-    if s is None:
+        """Lower, trim, collapse whitespace, '&amp;'->'and', remove *,(), strip non-alphanum."""
+    if x is None:
         return ""
-    s = str(s).strip().lower()
-    s = s.replace("&", "and")
-    return re.sub(r"[^a-z0-9]", "", s)
+    s = str(x).strip().lower().replace("&amp;", "and")
+    s = re.sub(r"[\*\(\)]", "", s)      # remove *, (, )
+    s = re.sub(r"\s+", " ", s)         # collapse whitespace
+    return re.sub(r"[^a-z0-9]", "", s)  # strip non-alphanum
 
 def split_lines(s: Optional[str]):
     """Split a cell with embedded line breaks into individual aliases."""
@@ -259,6 +261,8 @@ column_mapping = {
     "Sq. Ft.": "Building SQFT",
     "Square feet": "Building SQFT",
     "SqFt": "Building SQFT",
+    "sf: "Building SQFT",
+    "SF: "Building SQFT",
     "Building Square Footage": "Building SQFT",
     "Total Square Footage": "Building SQFT",
     "Building SQFT": "Building SQFT",
@@ -478,8 +482,8 @@ with st.sidebar:
 st.subheader("How it works")
 st.markdown(
     """
-1. This will **detect the correct sheet and header row** in the uploaded Source SOV by scanning for Street/City/State/Zip synonyms.  
-    - Best results to format column headers to match CC's, it will read most unless they are misspelled or include the year in the title.
+1. This will detect the column headers in the uploaded Source SOV.
+    - Best match results to format column headers: **Building Value, BPP, BI/EE, Square Feet, Occupancy Description, Contruction Type**
 2. Type in the Named Insured to name the outputted file
 3. Drop or upload your source file that you want to convert into an CrossCover SOV
 4. Select **"Use a local/netowrk path"** this is the CrossCover template
@@ -672,6 +676,7 @@ if process_button:
     except Exception as e:
         st.error(f"Processing failed: {e}")
         st.exception(e)
+
 
 
 
