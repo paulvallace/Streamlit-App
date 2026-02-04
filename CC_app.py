@@ -23,7 +23,7 @@ st.caption("Wraps the original `CrossCover_Sov_fixed.py` into a point-and-click 
 def norm(s: Optional[str]) -> str:
     """Normalize header text for matching."""
     """Lower, trim, collapse whitespace, '&amp;'->'and', remove *,(), strip non-alphanum."""
-    if x is None:
+    if s is None:
         return ""
     s = str(x).strip().lower().replace("&amp;", "and")
     s = re.sub(r"[\*\(\)]", "", s)      # remove *, (, )
@@ -676,6 +676,7 @@ if process_button:
     except Exception as e:
         st.error(f"Processing failed: {e}")
         st.exception(e)
+
 
 
 
