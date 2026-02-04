@@ -520,21 +520,23 @@ with st.sidebar:
         placeholder="Enter Named Insured...",
     )
 
-    source_sov = st.file_uploader(
-        "Upload Source SOV (.xlsx)",
-        type=["xlsx"],
-        accept_multiple_files=False,
-        help="This is the client-provided SOV you want to normalize."
+  
+    template_source_choice = st.radio(
+        "Template source",
+        options=["Upload template file", "Use a local/network path"],
+        index=0,
     )
-
-#    template_source_choice = st.radio(
-     #   "Template source",
-    #    options=["Upload template file", "Use a local/network path"],
-   #     index=0,
-#    )
 
     uploaded_template = None
     template_path = None
+    if template_source_choice == "Upload template file":
+        uploaded_template = st.file_uploader(
+            "Upload AmRisc Template (.xlsx)",
+            type=["xlsx"],
+            accept_multiple_files=False,
+            help="If not provided, you can switch to the 'path' option."
+        )
+    else:
         template_path = st.text_input(
             "Template path",
             value=r"AmRisc_SOV_Schedule.xlsx",
@@ -599,7 +601,9 @@ if process_button:
     if not source_sov:
         st.error("Please upload a **Source SOV (.xlsx)**.")
         st.stop()
-
+    if template_source_choice == "Upload template file" and not uploaded_template:
+        st.error("Please upload a **Template (.xlsx)** or switch to the path option.")
+        st.stop()
     if template_source_choice == "Use a local/network path" and not template_path:
         st.error("Please provide a **Template path**.")
         st.stop()
@@ -828,15 +832,6 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
-
-
-
-
-
-
-
-
-
 
 
 
