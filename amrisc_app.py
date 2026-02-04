@@ -535,14 +535,7 @@ with st.sidebar:
 
     uploaded_template = None
     template_path = None
-    if template_source_choice == "Upload template file":
-        uploaded_template = st.file_uploader(
-            "Upload AmRisc Template (.xlsx)",
-            type=["xlsx"],
-            accept_multiple_files=False,
-            help="If not provided, you can switch to the 'path' option."
-        )
-    else:
+    if template_source_choice == "Use a local/network path":
         template_path = st.text_input(
             "Template path",
             value=r"AmRisc_SOV_Schedule.xlsx",
@@ -836,6 +829,7 @@ if process_button:
 
     except Exception as e:
         st.error(f"Processing failed: {e}")
+
 
 
 
