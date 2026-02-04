@@ -261,8 +261,8 @@ column_mapping = {
     "Sq. Ft.": "Building SQFT",
     "Square feet": "Building SQFT",
     "SqFt": "Building SQFT",
-    "sf: "Building SQFT",
-    "SF: "Building SQFT",
+    "sf": "Building SQFT",
+    "SF": "Building SQFT",
     "Building Square Footage": "Building SQFT",
     "Total Square Footage": "Building SQFT",
     "Building SQFT": "Building SQFT",
@@ -676,6 +676,7 @@ if process_button:
     except Exception as e:
         st.error(f"Processing failed: {e}")
         st.exception(e)
+
 
 
 
