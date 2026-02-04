@@ -20,15 +20,19 @@ st.caption("Wraps the original `CrossCover_Sov_fixed.py` into a point-and-click 
 # =========================
 # Helpers (ported & refined)
 # =========================
-def norm(s: Optional[str]) -> str:
-    """Normalize header text for matching."""
+
+def normalize_alias(x: Optional[str]) -> str:
     """Lower, trim, collapse whitespace, '&amp;'->'and', remove *,(), strip non-alphanum."""
-    if s is None:
+    if x is None:
         return ""
-    s = str(x).strip().lower().replace("&amp;", "and")
-    s = re.sub(r"[\*\(\)]", "", s)      # remove *, (, )
-    s = re.sub(r"\s+", " ", s)         # collapse whitespace
-    return re.sub(r"[^a-z0-9]", "", s)  # strip non-alphanum
+    s = str(x).strip().lower()
+    s = s.replace("&amp;", "and").replace("&amp;amp;", "and")
+    s = re.sub(r"[\*\(\)]", "", s)
+    s = re.sub(r"\s+", " ", s)
+    return re.sub(r"[^a-z0-9]", "", s)
+
+# alias for readability in header matching
+norm = normalize_alias
 
 def split_lines(s: Optional[str]):
     """Split a cell with embedded line breaks into individual aliases."""
@@ -676,6 +680,7 @@ if process_button:
     except Exception as e:
         st.error(f"Processing failed: {e}")
         st.exception(e)
+
 
 
 
