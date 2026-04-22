@@ -151,34 +151,40 @@ def find_sprinkler_col(df: pd.DataFrame) -> Optional[str]:
     return None
 
 # --- Strict sprinkler mapping (map what's present; no derivations) ---
+import pandas as pd
+import re
+
 def map_sprinkler_to_targets(
     df: pd.DataFrame,
     source_col_name: str,
     yn_target_col: str = "Sprinklered (Y/N)",
     pct_target_col: str = "Percent Sprinklered"
 ) -> pd.DataFrame:
-    """
-    If values look like Y/N, fill 'Sprinklered (Y/N)' with 'Y'/'N'.
-    If values look like percentages (0..100 or with %), fill 'Percent Sprinklered' with 0..100.
-    No derivations between Y/N and %.
-    """
-    # Ensure targets exist
+
     if yn_target_col not in df.columns:
         df[yn_target_col] = None
     if pct_target_col not in df.columns:
         df[pct_target_col] = None
-
     if source_col_name not in df.columns:
         return df
 
-    s = df[source_col_name].astype(str).str.strip()
+    # keep original values, but create a safe string view for parsing
+    raw = df[source_col_name]
 
-    def is_yn(val: str) -> bool:
-        v = val.lower()
+    def as_clean_str(x) -> str:
+        if x is None or (isinstance(x, float) and pd.isna(x)) or pd.isna(x):
+            return ""
+        return str(x).strip()
+
+    s = raw.map(as_clean_str)
+
+    def is_yn(val) -> bool:
+        v = as_clean_str(val).lower()
         return v in {"y", "yes", "n", "no", "true", "false", "t", "f", "1", "0"}
 
-    def is_pct(val: str) -> bool:
-        m = re.match(r"^\s*(\d+(?:\.\d+)?)\s*%?\s*$", val)
+    def is_pct(val) -> bool:
+        txt = as_clean_str(val)
+        m = re.match(r"^\s*(\d+(?:\.\d+)?)\s*%?\s*$", txt)
         if not m:
             return False
         try:
@@ -187,8 +193,8 @@ def map_sprinkler_to_targets(
         except Exception:
             return False
 
-    yn_mask = s.apply(is_yn)
-    pct_mask = s.apply(is_pct)
+    yn_mask = raw.map(is_yn)
+    pct_mask = raw.map(is_pct)
 
     if yn_mask.any():
         df.loc[yn_mask, yn_target_col] = s[yn_mask].str.lower().map({
@@ -197,10 +203,18 @@ def map_sprinkler_to_targets(
         })
 
     if pct_mask.any():
-        pct_vals = s[pct_mask].str.replace("%", "", regex=False).astype(float).clip(0, 100).round().astype(int)
+        pct_vals = (
+            s[pct_mask]
+            .str.replace("%", "", regex=False)
+            .astype(float)
+            .clip(0, 100)
+            .round()
+            .astype("Int64")  # keeps blanks as <NA>
+        )
         df.loc[pct_vals.index, pct_target_col] = pct_vals
 
     return df
+
 
 # =========================
 # AmRisc targets (subset of SOV-APP)
