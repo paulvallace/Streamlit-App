@@ -746,9 +746,14 @@ if process_button:
                 for col in ["Sprinklered (Y/N)", "Percent Sprinklered"]:
                     if col not in new_data.columns:
                         new_data[col] = None
-
+                        
             st.markdown("**First 5 rows of mapped data:**")
-            st.dataframe(new_data.head(), use_container_width=True)
+            preview = new_data.head().copy()
+            
+            # Force safe display types for Streamlit/Arrow
+            preview = preview.astype("string")
+            
+            st.dataframe(preview, use_container_width=True)
 
         # Load template & resolve headers
         with st.spinner("Loading template and resolving headers…"):
