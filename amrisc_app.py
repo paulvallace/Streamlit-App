@@ -792,7 +792,11 @@ if process_button:
                     rows.append((tgt_label, k, col_idx if col_idx else "NOT FOUND"))
                     if not col_idx:
                         unmatched.append(tgt_label)
-                st.table(pd.DataFrame(rows, columns=["Target Label", "Normalized", "Col Index"]))
+                match_df = pd.DataFrame(rows, columns=["Target Label", "Normalized", "Col Index"])
+
+                # ✅ Arrow-safe display
+                st.table(match_df.astype("string"))
+                
                 if unmatched:
                     st.warning("Targets not found in template header: " + ", ".join(unmatched))
 
