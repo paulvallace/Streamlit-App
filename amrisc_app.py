@@ -127,7 +127,9 @@ def first_empty_row_under(ws, column_index: int, start: int = 3) -> int:
         if ws.cell(row=r, column=column_index).value in (None, ""):
             return r
         r += 1
-
+def arrow_safe(df: pd.DataFrame) -> pd.DataFrame:
+    return df.astype("string")
+    
 def safe_write(ws, row: int, col: int, value):
     """Write value; if target is merged, write into the merged range's top-left cell."""
 
@@ -792,10 +794,10 @@ if process_button:
                     rows.append((tgt_label, k, col_idx if col_idx else "NOT FOUND"))
                     if not col_idx:
                         unmatched.append(tgt_label)
-                match_df = pd.DataFrame(rows, columns=["Target Label", "Normalized", "Col Index"])
+                    
+                    match_df = pd.DataFrame(rows, columns=["Target Label", "Normalized", "Col Index"])
+                    st.table(match_df.astype("string"))
 
-                # ✅ Arrow-safe display
-                st.table(match_df.astype("string"))
                 
                 if unmatched:
                     st.warning("Targets not found in template header: " + ", ".join(unmatched))
